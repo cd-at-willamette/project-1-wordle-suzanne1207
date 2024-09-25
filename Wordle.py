@@ -1,7 +1,7 @@
 ########################################
-# Name:
-# Collaborators (if any):
-# GenAI Transcript (if any):
+# Name: Suzanne Gunderson
+# Collaborators (if any): QUAD Center Tutoring
+# OpenAI Transcript (if any): N/A
 # Estimated time spent (hr):
 # Description of any added extensions:
 ########################################
@@ -17,13 +17,31 @@ def wordle():
         # What should happen when RETURN/ENTER is pressed.
         gw.show_message("You need to implement this method")
 
+        rownumber = gw.get_current_row()
+        string = ""
+        for i in range(N_COLS):
+            letter = gw.get_square_letter(rownumber,i)
+            string += letter
+        is_english_word(string)
+        if is_english_word(string) and len(string) == 5:
+            gw.show_message("Good choice!")
+        else:
+            gw.show_message("Not in word list.")
 
     gw = WordleGWindow()
     gw.add_enter_listener(enter_action)
+    word = "ideas"
+    gw.set_square_letter(0,0,word[0]) # Takes the 0th row, 0th column, and the 0th letter from our word.
+    gw.set_square_letter(0,1,word[1])
+    gw.set_square_letter(0,2,word[2])
+    gw.set_square_letter(0,3,word[3])
+    gw.set_square_letter(0,4,word[4])
 
+    
 
 
 
 # Startup boilerplate
 if __name__ == "__main__":
     wordle()
+
