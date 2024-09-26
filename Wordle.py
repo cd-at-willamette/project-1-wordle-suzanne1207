@@ -27,10 +27,48 @@ def wordle():
             gw.show_message("Good choice!")
         else:
             gw.show_message("Not in word list.")
+        color_row(word, correct)
+
+    def color_row(guess, correct):
+        letters_left = correct
+        rownumber = gw.get_current_row()
+        for i in range(len(guess)):
+            if guess[i] == correct[i]:
+                gw.set_square_color(rownumber, i, "green")
+                letters_left = remove_letter(letters_left, guess[i])
+                print(letters_left)
+        for i in range(len(guess)):
+            if gw.get_square_color(rownumber, i) != "green":
+                if guess[i] in letters_left:
+                    gw.set_square_color(rownumber, i, "yellow")
+                    letters_left = remove_letter(letters_left, guess[i])
+                    print(letters_left)
+                else:
+                    gw.set_square_color(rownumber, i, "grey")
+
+    def remove_letter(word, letter):
+        word = word.replace(letter, "", 1)
+        return word
+
+
+
+#def color_row (guess, correct):
+ #   letters_left = guess
+  #  for i in len(guess):
+   #     if guess[i] == correct[i]:
+    #        set_square_color("green")
+     #       letters_left.replace(guess[i], "", 1)
+      #  else:
+       #     if guess[i] in letters_left and not "green":
+        #        set_square_color("yellow")
+         #       letters_left.replace(guess[i], "", 1)
+          #  else:
+           #     set_square_color("grey")
 
     gw = WordleGWindow()
     gw.add_enter_listener(enter_action)
-    word = "ideas"
+    word = "sassy"
+    correct = "glass"
     gw.set_square_letter(0,0,word[0]) # Takes the 0th row, 0th column, and the 0th letter from our word.
     gw.set_square_letter(0,1,word[1])
     gw.set_square_letter(0,2,word[2])
@@ -44,4 +82,3 @@ def wordle():
 # Startup boilerplate
 if __name__ == "__main__":
     wordle()
-
