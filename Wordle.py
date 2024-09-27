@@ -12,6 +12,12 @@ import random
 
 def wordle():
     # The main function to play the Wordle game.
+    correct = ""
+    while len(correct) != 5:
+        randomword = random.choice(ENGLISH_WORDS)
+        if len(randomword) == 5:
+            correct = randomword
+    print(correct)
 
     def enter_action():
         # What should happen when RETURN/ENTER is pressed.
@@ -49,26 +55,15 @@ def wordle():
     def remove_letter(word, letter):
         word = word.replace(letter, "", 1)
         return word
+    
 
+            
 
-
-#def color_row (guess, correct):
- #   letters_left = guess
-  #  for i in len(guess):
-   #     if guess[i] == correct[i]:
-    #        set_square_color("green")
-     #       letters_left.replace(guess[i], "", 1)
-      #  else:
-       #     if guess[i] in letters_left and not "green":
-        #        set_square_color("yellow")
-         #       letters_left.replace(guess[i], "", 1)
-          #  else:
-           #     set_square_color("grey")
 
     gw = WordleGWindow()
     gw.add_enter_listener(enter_action)
     word = "sassy"
-    correct = "glass"
+    # correct = "glass"
     gw.set_square_letter(0,0,word[0]) # Takes the 0th row, 0th column, and the 0th letter from our word.
     gw.set_square_letter(0,1,word[1])
     gw.set_square_letter(0,2,word[2])
