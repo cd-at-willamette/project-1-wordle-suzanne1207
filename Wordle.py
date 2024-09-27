@@ -12,49 +12,65 @@ import random
 
 def wordle():
     # The main function to play the Wordle game.
-    correct = ""
-    while len(correct) != 5:
-        randomword = random.choice(ENGLISH_WORDS)
-        if len(randomword) == 5:
-            correct = randomword
-    print(correct)
+    correct = "" # starting word is empty
+    while len(correct) != 5: # while the starting word isn't 5 letters long, we need to generate a new one.
+        randomword = random.choice(ENGLISH_WORDS) # generates a random word from ENGLISH_WORDS
+        if len(randomword) == 5: # checks to make sure the word is 5 letters long
+            correct = randomword.upper() # if 5 letters long, reassigns new word as the random word
+    print(correct) # prints the correct word
 
     def enter_action():
         # What should happen when RETURN/ENTER is pressed.
         gw.show_message("You need to implement this method")
 
-        rownumber = gw.get_current_row()
-        string = ""
+        rownumber = gw.get_current_row() # finds what row you're on
+        string = "" # sets the string as empty so you can add onto it
         for i in range(N_COLS):
             letter = gw.get_square_letter(rownumber,i)
-            string += letter
+            string += letter # adds the letter to the string
         is_english_word(string)
         if is_english_word(string) and len(string) == 5:
-            gw.show_message("Good choice!")
+            gw.show_message(string)
         else:
-            gw.show_message("Not in word list.")
-        color_row(word, correct)
+            gw.show_message("Not in word list, choose another word.")
+        color_row(string, correct)
+        greensquare = 0
+        for i in range(5):
+            if gw.get_square_color(rownumber, i) == "green":
+                greensquare = greensquare + 1
+                print(greensquare)
+        if greensquare == 5:
+            gw.show_message("Congrats! You won.")
+        else:
+            if rownumber == 5:
+                gw.show_message("Nice try. The word was" + correct)
+            else:
+                gw.set_current_row(rownumber + 1)
+            
 
     def color_row(guess, correct):
-        letters_left = correct
+        letters_left = correct # at the start, the letters left is just the word
         rownumber = gw.get_current_row()
+        print(guess)
+        print(correct)
         for i in range(len(guess)):
             if guess[i] == correct[i]:
                 gw.set_square_color(rownumber, i, "green")
+                print("green")
                 letters_left = remove_letter(letters_left, guess[i])
                 print(letters_left)
         for i in range(len(guess)):
-            if gw.get_square_color(rownumber, i) != "green":
-                if guess[i] in letters_left:
-                    gw.set_square_color(rownumber, i, "yellow")
-                    letters_left = remove_letter(letters_left, guess[i])
-                    print(letters_left)
+            if gw.get_square_color(rownumber, i) != "green": # checks to make sure you don't recolor the green squares
+                if guess[i] in letters_left: # if the letter is in the word
+                    gw.set_square_color(rownumber, i, "yellow") # set square to yellow
+                    letters_left = remove_letter(letters_left, guess[i]) # removes the yellow letter from the letters left list
+                    print(letters_left) # prints the new letters left list
                 else:
-                    gw.set_square_color(rownumber, i, "grey")
+                    gw.set_square_color(rownumber, i, "grey") # simply colors the square grey because not in word
 
     def remove_letter(word, letter):
-        word = word.replace(letter, "", 1)
-        return word
+        word = word.replace(letter, "", 1) # replaces ith letter with an empty space 1 time
+        return word # returns the new string without the letter already guesed
     
 
             
@@ -62,13 +78,13 @@ def wordle():
 
     gw = WordleGWindow()
     gw.add_enter_listener(enter_action)
-    word = "sassy"
+    #word = "sassy"
     # correct = "glass"
-    gw.set_square_letter(0,0,word[0]) # Takes the 0th row, 0th column, and the 0th letter from our word.
-    gw.set_square_letter(0,1,word[1])
-    gw.set_square_letter(0,2,word[2])
-    gw.set_square_letter(0,3,word[3])
-    gw.set_square_letter(0,4,word[4])
+    #gw.set_square_letter(0,0,word[0]) # Takes the 0th row, 0th column, and the 0th letter from our word.
+    #gw.set_square_letter(0,1,word[1])
+    #gw.set_square_letter(0,2,word[2])
+    #gw.set_square_letter(0,3,word[3])
+    #gw.set_square_letter(0,4,word[4])
 
     
 
