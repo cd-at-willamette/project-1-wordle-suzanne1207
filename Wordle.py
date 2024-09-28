@@ -2,7 +2,7 @@
 # Name: Suzanne Gunderson
 # Collaborators (if any): QUAD Center Tutoring
 # OpenAI Transcript (if any): N/A
-# Estimated time spent (hr):
+# Estimated time spent (hr): 8
 # Description of any added extensions:
 ########################################
 
@@ -40,12 +40,21 @@ def wordle():
                 greensquare = greensquare + 1
                 print(greensquare)
         if greensquare == 5:
-            gw.show_message("Congrats! You won.")
+            gw.show_message("Congrats, you won!")
         else:
             if rownumber == 5:
                 gw.show_message("Nice try. The word was" + correct)
             else:
                 gw.set_current_row(rownumber + 1)
+        for i in range(len(string)):
+            letter = string[i]
+            if gw.get_square_color(rownumber, i) == "green":
+                gw.set_key_color(letter, "green")
+            if gw.get_key_color(string[i]) != "green":
+                if gw.get_square_color(rownumber, i) == "yellow":
+                    gw.set_key_color(letter, "yellow")
+                if gw.get_square_color(rownumber, i) == "grey":
+                    gw.set_key_color(letter, "grey")
             
 
     def color_row(guess, correct):
