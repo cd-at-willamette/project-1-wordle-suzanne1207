@@ -1,6 +1,6 @@
 ########################################
 # Name: Suzanne Gunderson
-# Collaborators (if any): QUAD Center Tutoring for some of the milestones
+# Collaborators (if any): QUAD Center Tutoring for some milestones
 # OpenAI Transcript (if any): N/A
 # Estimated time spent (hr): 8
 # Description of any added extensions:
@@ -33,6 +33,7 @@ def wordle():
             gw.show_message(string)
         else:
             gw.show_message("Not in word list, choose another word.") # asks player to choose another word because it's either too short or not english
+            rownumber = rownumber - 1 # stays on current row so player can still have enough guesses
         color_row(string, correct)
         greensquare = 0
         for i in range(5):
@@ -40,21 +41,20 @@ def wordle():
                 greensquare = greensquare + 1
                 print(greensquare)
         if greensquare == 5: # checks to see if an entire row is green
-            gw.show_message("Congrats, you won!") # tells player they won the game
+            gw.show_message("Congrats, you won!")
         else:
-            if rownumber == 5: # checks to see if the player has reached the end of the game without guessing the word correctly
-                gw.show_message("Nice try. The word was " + correct) # displays a message and the word
-                rownumber = rownumber - 1 # if the word isn't in word list or not long enough, allows the player another guess instead of losing that guess and moving to the next row
+            if rownumber == 5: # checks to see if the player has reached the end of the game without a correct guess
+                gw.show_message("Nice try. The word was" + correct)
             else:
                 gw.set_current_row(rownumber + 1) # moves to the next row
-        for i in range(len(string)): # looks at each letter in the word guessed
+        for i in range(len(string)): # looks at each letter in the guessed word
             letter = string[i] # assigns letter variable
             if gw.get_square_color(rownumber, i) == "green": # checks to see if the guess was correct
                 gw.set_key_color(letter, "green") # turns key color green
             if gw.get_key_color(string[i]) != "green": # checks to make sure the green keys stay green no matter if you make another guess with the letters in the wrong spot
-                if gw.get_square_color(rownumber, i) == "yellow": # checks to see if the guess was in the word
+                if gw.get_square_color(rownumber, i) == "yellow": # checks to see if the guess is in the word
                     gw.set_key_color(letter, "yellow") # turns key color yellow
-                if gw.get_square_color(rownumber, i) == "grey": # checks to see if the guess isn't in the word
+                if gw.get_square_color(rownumber, i) == "grey": # checks to see if the guess letter is not in the word
                     gw.set_key_color(letter, "grey") # turns key color grey
             
 
@@ -64,12 +64,12 @@ def wordle():
         print(guess)
         print(correct)
         for i in range(len(guess)): # goes through each letter in the guessed word
-            if guess[i] == correct[i]: # if the letter in the guess is the same as the letter in that spot in the correct word,
-                gw.set_square_color(rownumber, i, "green")
+            if guess[i] == correct[i]: # if the letter in the guess is the same as the letter in the correct word
+                gw.set_square_color(rownumber, i, "green") # sets square color to green
                 print("green")
-                letters_left = remove_letter(letters_left, guess[i]) # removes letter from the list of letters left so python doesn't keep looping
+                letters_left = remove_letter(letters_left, guess[i]) # removes the letter from the letters left list so python doesn't keep looping
                 print(letters_left)
-        for i in range(len(guess)): # looks at every letter in the guessed word
+        for i in range(len(guess)):
             if gw.get_square_color(rownumber, i) != "green": # checks to make sure you don't recolor the green squares
                 if guess[i] in letters_left: # if the letter is in the word
                     gw.set_square_color(rownumber, i, "yellow") # set square to yellow
