@@ -1,6 +1,6 @@
 ########################################
 # Name: Suzanne Gunderson
-# Collaborators (if any): QUAD Center Tutoring
+# Collaborators (if any): QUAD Center Tutoring for some of the milestones
 # OpenAI Transcript (if any): N/A
 # Estimated time spent (hr): 8
 # Description of any added extensions:
@@ -44,6 +44,7 @@ def wordle():
         else:
             if rownumber == 5: # checks to see if the player has reached the end of the game without guessing the word correctly
                 gw.show_message("Nice try. The word was " + correct) # displays a message and the word
+                rownumber = rownumber - 1 # if the word isn't in word list or not long enough, allows the player another guess instead of losing that guess and moving to the next row
             else:
                 gw.set_current_row(rownumber + 1) # moves to the next row
         for i in range(len(string)): # looks at each letter in the word guessed
