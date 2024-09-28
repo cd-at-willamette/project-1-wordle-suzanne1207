@@ -32,6 +32,9 @@ def wordle():
         if is_english_word(string) and len(string) == 5: # checks to make sure the guess is an english word and five letters long
             gw.show_message(string)
         else:
+            letter = string[i]
+            for i in range(len(string)):
+                gw.set_key_color(letter, "white") # ensures that the key color doen't change when the guess isn't valid
             gw.show_message("Not in word list, choose another word.") # asks player to choose another word because it's either too short or not english
             rownumber = rownumber - 1 # stays on current row so player can still have enough guesses
         color_row(string, correct)
