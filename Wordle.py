@@ -46,7 +46,7 @@ def wordle():
             gw.show_message("Congrats, you won!")
         else:
             if rownumber == 5: # checks to see if the player has reached the end of the game without a correct guess
-                gw.show_message("Nice try. The word was" + correct)
+                gw.show_message("Nice try. The word was " + correct)
             else:
                 gw.set_current_row(rownumber + 1) # moves to the next row
         for i in range(len(string)): # looks at each letter in the guessed word
